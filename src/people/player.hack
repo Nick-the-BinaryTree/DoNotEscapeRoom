@@ -7,8 +7,8 @@ class Player {
     private static keyset<string> $items = keyset[];
     private static int $money = 0;
 
-    public function describe(): void {
-        echo "Your name is " . $this->getName() . ".\n";
+    public static function describe(): void {
+        echo "Your name is " . self::getName() . ".\n";
         echo "You have " . self::$money . " bitcoin.\n";
 
         if (C\count(self::$items) > 0) {
@@ -18,33 +18,33 @@ class Player {
         echo "\n";
     }
 
-    public function getName(): string {
+    public static function getName(): string {
         return self::$name ?? "...that's odd. You don't recall";
     }
 
-    public function setName(string $name): void {
+    public static function setName(string $name): void {
         self::$name = $name;
     }
 
-    public function addItem(string $item): void {
+    public static function addItem(string $item): void {
         self::$items[] = $item;
     }
 
-    public function hasItem(string $item): bool {
+    public static function hasItem(string $item): bool {
         return C\contains_key(self::$items, $item);
     }
 
-    public function removeItem(string $item): void {
+    public static function removeItem(string $item): void {
         self::$items = Keyset\filter(self::$items, $x ==> $x == $item);
     }
 
-    public function addMoney(int $amount): void {
+    public static function addMoney(int $amount): void {
         if ($amount > 0) {
             self::$money += $amount;
         }
     }
 
-    public function removeMoney(int $amount): void {
+    public static function removeMoney(int $amount): void {
         if ($amount > 0) {
             self::$money -= $amount;
         }
