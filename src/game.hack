@@ -49,7 +49,7 @@ function startGame(): void {
                  "  (c) No where.\n" . 
                  "  (d) Outside. This is the incorrect choice.\n";
             
-            $choice = \readline("");
+            $choice = \readline('');
 
             if ($choice === "a") {
                 $currentArea = $destinations[0];

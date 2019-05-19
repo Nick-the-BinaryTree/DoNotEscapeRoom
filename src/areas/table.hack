@@ -1,9 +1,9 @@
 namespace Areas;
 
-require_once(__DIR__.'/area.hack');
-require_once(__DIR__.'/../items.hack');
-require_once(__DIR__.'/../people/player.hack');
-require_once(__DIR__.'/../people/waiter.hack');
+require_once(__DIR__."/area.hack");
+require_once(__DIR__."/../items.hack");
+require_once(__DIR__."/../people/player.hack");
+require_once(__DIR__."/../people/waiter.hack");
 
 class Table implements \Areas\Area {
     private static function describeMenu(): void {
@@ -16,15 +16,15 @@ class Table implements \Areas\Area {
         echo "\nThe waiter, an utterly normal looking fellow, shuffles over.\n";
         \People\Waiter::speak();
         echo "\nYou look over his solid white collared shirt. How traditional.\n" .
-          "  (a) Buy a cookie.\n" .
-          "  (b) Buy tea.\n" .
-          "  (c) Dismiss him.\n";
+            "  (a) Buy a cookie.\n" .
+            "  (b) Buy tea.\n" .
+            "  (c) Dismiss him.\n";
 
         if (\People\Player::hasItem(\Items\ITEMS::POEM)) {
             echo "  (d) Read poem.\n";
         }
 
-        $choice = \readline("");
+        $choice = \readline('');
 
         if ($choice === "a") {
             if (\People\Player::getMoney() >= 1) {
@@ -70,13 +70,13 @@ class Table implements \Areas\Area {
 
     public static function queryPlayer(): bool {
         echo "\n\nYour arms rest comfortably over the table.\n" .
-          "What do you do?\n" .
-          "  (a) Look at the menu.\n" .
-          "  (b) Call the waiter over.\n" .
-          "  (c) " . (\People\Player::hasItem(\Items\ITEMS::POEM)
-            ? "Read your poem"
-            : "Write a poem on the knapkin") . ".\n" .
-          "  (d) Stand up.\n";
+            "What do you do?\n" .
+            "  (a) Look at the menu.\n" .
+            "  (b) Call the waiter over.\n" .
+            "  (c) " . (\People\Player::hasItem(\Items\ITEMS::POEM)
+                ? "Read your poem"
+            :   "Write a poem on the knapkin") . ".\n" .
+            "  (d) Stand up.\n";
 
         $choice = \readline('');
 
