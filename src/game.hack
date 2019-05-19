@@ -1,5 +1,10 @@
 namespace Game;
 
+use namespace HH\Lib\Vec;
+
+// require_once(__DIR__.'/areas/bar.hack');
+// require_once(__DIR__.'/areas/corner.hack');
+require_once(__DIR__.'/areas/table.hack');
 require_once(__DIR__.'/people/player.hack');
 require_once(__DIR__.'/people/waiter.hack');
 
@@ -22,32 +27,39 @@ function playLessSadEnding(): void {
 }
 
 function startGame(): void {
+    $shouldMove = null;
+    $currentArea = \Areas\AREAS::TABLE;
 
-    // \People\Player::describe();
-    // \People\Player::addItem('ham');
-    // \People\Player::addMoney(20);
-    // \People\Player::setName('tim');
-    // \People\Player::describe();
-    // \People\Player::hasItem('ham');
-    // \People\Player::hasItem('not ham');
-    // \People\Player::removeItem('ham');
-    // \People\Player::removeMoney(10);
-    // \People\Player::describe();
-
-    playIntro();
+    // playIntro();
 
     while (!\People\Waiter::shouldKickOut()) {
+        $shouldMove = false;
 
+        if ($currentArea  === \Areas\AREAS::TABLE) {
+            $shouldMove = \Areas\Table::queryPlayer();
+        }
+        if ($shouldMove) {
+            $destinations = Vec\filter(
+                Vec\keys(\Areas\AREAS::getNames()),
+                $destination ==> $destination !== $currentArea
+            );
+            echo "Where would you like to go?\n" .
+                 "  (a) " . $destinations[0] . "\n" .
+                 "  (b) " . $destinations[1] . "\n" .
+                 "  (c) No where.\n" . 
+                 "  (d) Outside. This is the incorrect choice.\n";
+            
+            $choice = \readline("");
+
+            if ($choice === "a") {
+                $currentArea = $destinations[0];
+            } elseif ($choice === "b") {
+                $currentArea = $destinations[1];
+            } elseif ($choice === "d") {
+                break;
+            }
+        }
     }
 
     playSadEnding();
-    // echo "\nYour arms rest comfortably over the table.\n" .
-    //   "What do you do?\n" .
-    //   "  (a) Look at the menu.\n" .
-    //   "  (b) Call the waiter over.\n" .
-    //   "  (c) Write a poem on the knapkin.\n";
-
-    // $choice = \readline('');
-
-    // echo $choice;
 }

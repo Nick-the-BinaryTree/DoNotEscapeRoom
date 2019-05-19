@@ -1,10 +1,12 @@
 namespace People;
 
+require_once(__DIR__."/../items.hack");
+
 use namespace HH\Lib\{C, Keyset, Str};
 
 class Player {
     private static ?string $name;
-    private static keyset<string> $items = keyset[];
+    private static keyset<\Items\ITEMS> $items = keyset[];
     private static int $money = 0;
 
     public static function describe(): void {
@@ -26,22 +28,26 @@ class Player {
         self::$name = $name;
     }
 
-    public static function addItem(string $item): void {
+    public static function addItem(\Items\ITEMS $item): void {
         self::$items[] = $item;
     }
 
-    public static function hasItem(string $item): bool {
+    public static function hasItem(\Items\ITEMS $item): bool {
         return C\contains_key(self::$items, $item);
     }
 
-    public static function removeItem(string $item): void {
-        self::$items = Keyset\filter(self::$items, $x ==> $x == $item);
+    public static function removeItem(\Items\ITEMS $item): void {
+        self::$items = Keyset\filter(self::$items, $x ==> $x === $item);
     }
 
     public static function addMoney(int $amount): void {
         if ($amount > 0) {
             self::$money += $amount;
         }
+    }
+
+    public static function getMoney(): int {
+        return self::$money;
     }
 
     public static function removeMoney(int $amount): void {
