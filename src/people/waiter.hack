@@ -5,10 +5,44 @@ require_once(__DIR__."/player.hack");
 
 class Waiter implements \People\NPC {
     private static int $annoyance = 5;
-    private static bool $heardPoem = false;
+    public static bool $heardPoem = false;
 
     private static function brood(): void {
         self::$annoyance++;
+    }
+
+    public static function comeOver(): void {
+        echo "The waiter, an utterly normal looking fellow, shuffles over.\n";
+    }
+
+    public static function giveCookie(): void {
+        echo "The waiter provides you with a single cookie. It glistens slightly.\n";
+        \People\Player::addItem(\People\Player\ITEMS::COOKIE);
+        \People\Player::removeMoney(1);
+    }
+
+    public static function giveTea(): void {
+        echo "The waiter places a polished mug on the table and gently pours Earl Grey.\n";
+        \People\Player::addItem(\People\Player\ITEMS::TEA);
+        \People\Player::removeMoney(1);
+    }
+
+    public static function grantFaxMachineAccess(): void {
+        echo "Err, yes we have a fax machine. I can get it going for you.\n";
+        \People\Player::addItem(\People\Player\ITEMS::FAX_MACHINE_ACCESS);
+    }
+
+    public static function leave(): void {
+        echo "The waiter raises a furry black eyebrow and leaves without a word.\n";
+    }
+
+    public static function listenToPoem(): void {
+        self::$heardPoem = true;
+
+        echo "A sparkle of adoration flickers across the waiter's eyes.\n" .
+            "He blinks and scurries off.\n" .
+            "A pound lays on the table. \n";
+        \People\Player::addMoney(1);
     }
 
     public static function shouldKickOut(): bool {
@@ -19,15 +53,6 @@ class Waiter implements \People\NPC {
 
             return true;
         }
-        return false;
-    }
-
-    public static function shouldListenToPoem(): bool {
-        if (self::$heardPoem) {
-            return false;
-        }
-        self::$heardPoem = true;
-        
         return false;
     }
 

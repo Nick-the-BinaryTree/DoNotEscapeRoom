@@ -12,14 +12,17 @@ class Table implements \Areas\Area {
     }
 
     private static function speakToWaiter(): void {
-        echo "\nThe waiter, an utterly normal looking fellow, shuffles over.\n";
+        \People\Waiter::comeOver();
         \People\Waiter::speak();
         echo "\nYou look over his solid white collared shirt. How traditional.\n" .
             "  (a) Buy a cookie.\n" .
             "  (b) Buy tea.\n" .
             "  (c) Dismiss him.\n";
 
-        if (\People\Player::hasItem(\People\Player\ITEMS::POEM)) {
+        if (\People\Player::hasItem(\People\Player\ITEMS::DESIRE_TO_MARRY_ICELANDER)) {
+            echo "  (d) Inquire about fax machine.\n";
+        } elseif (\People\Player::hasItem(\People\Player\ITEMS::POEM)
+            && !\People\Waiter::$heardPoem) {
             echo "  (d) Read poem.\n";
         }
 
@@ -28,36 +31,30 @@ class Table implements \Areas\Area {
         if ($choice === "a") {
             if (\People\Player::getMoney() >= 1) {
                 \People\Waiter::takeOrder();
-                echo "The waiter provides you with a single cookie. It glistens slightly.\n";
-                \People\Player::addItem(\People\Player\ITEMS::COOKIE);
+                \People\Waiter::giveCookie();
 
                 if (\People\Player::hasItem(\People\Player\ITEMS::TEA)) {
                     echo "You dip the cookie in the tea. This is what life was meant for.\n";
                 }
-                \People\Player::removeMoney(1);
             } else {
                 echo "You don't have money to pay for the cookie. It's terribly awkward.\n";
             }
         } elseif ($choice === "b") {
             if (\People\Player::getMoney() >= 1) {
                 \People\Waiter::takeOrder();
-                \People\Player::addItem(\People\Player\ITEMS::TEA);
-                echo "The waiter places a polished mug on the table and gently pours Earl Grey.\n";
-                \People\Player::removeMoney(1);
+                \People\Waiter::giveTea();
             } else {
                 echo "Free tea is to whimsical for any reality. Go acquire funds.\n";
             }
-        } elseif ($choice === "d" && \People\Player::hasItem(\People\Player\ITEMS::POEM)) {
-            if (\People\Waiter::shouldListenToPoem()) {
-                echo "A sparkle of adoration flickers across the waiter's eyes.\n" .
-                    "He blinks and scurries off.\n" .
-                    "A pound lays on the table. \n";
-                    \People\Player::addMoney(1);
-            } else {
-                echo "But he's already heard it.\n";
+        } elseif ($choice === "d") {
+            if (\People\Player::hasItem(\People\Player\ITEMS::DESIRE_TO_MARRY_ICELANDER)) {
+                \People\Waiter::grantFaxMachineAccess();
+            } elseif (\People\Player::hasItem(\People\Player\ITEMS::POEM)
+                && !\People\Waiter::$heardPoem) {
+                \People\Waiter::listenToPoem();
             }
         } else {
-            echo "The waiter raises a furry black eyebrow and leaves without a word.\n";
+            \People\Waiter::leave();
         }
     }
 
