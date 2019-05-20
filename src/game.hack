@@ -18,7 +18,11 @@ function playIntro(): void {
     \readline("...finish your food six hours and fourteen minutes ago.");
 }
 
-function playSadEnding(): void {
+function playSadEnding(bool $inDebt=false): void {
+    if ($inDebt) {
+        \readline("Having accrued unpayable debts, you are spirited from the establishment.");
+        \readline("Unfortunately, it seems money is the least of your problems.");
+    }
     \readline("The sad ending.");
 }
 
@@ -37,6 +41,10 @@ function startGame(): void {
 
         if ($currentArea  === \Areas\AREAS::TABLE) {
             $shouldMove = \Areas\Table::queryPlayer();
+        }
+        if (\People\Player::getMoney() < 0) {
+            playSadEnding(true);
+            return;
         }
         if ($shouldMove) {
             $destinations = Vec\filter(
@@ -60,6 +68,5 @@ function startGame(): void {
             }
         }
     }
-
     playSadEnding();
 }

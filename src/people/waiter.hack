@@ -1,6 +1,8 @@
 namespace People;
 
-class Waiter {
+require_once(__DIR__."/npc.hack");
+
+class Waiter implements \People\NPC {
     private static int $annoyance = 5;
 
     private static function brood(): void {
