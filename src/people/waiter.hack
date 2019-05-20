@@ -1,6 +1,7 @@
 namespace People;
 
 require_once(__DIR__."/npc.hack");
+require_once(__DIR__."/player.hack");
 
 class Waiter implements \People\NPC {
     private static int $annoyance = 5;
