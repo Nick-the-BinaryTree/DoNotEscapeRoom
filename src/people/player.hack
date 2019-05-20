@@ -44,7 +44,6 @@ namespace People {
         public static function setName(string $name): void {
             self::$name = $name;
 
-            self::removeItem(\People\Player\ITEMS::DESIRE_TO_KNOW_NAME);
             self::addItem(\People\Player\ITEMS::NAME);
         }
 
