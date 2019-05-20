@@ -1,7 +1,12 @@
 namespace People\Player {
     enum ITEMS: string {
         COOKIE = "Cookie";
+        DESIRE_TO_KNOW_NAME = "Desire to Know Name";
+        DESIRE_TO_MARRY_ICELANDER = "Desire to Marry Icelander";
+        FAX_MACHINE_ACCESS = "Fax Machine Access";
         MAGISTRATE_PHONE = "Magistrate's Phone";
+        MARRIAGE_WITH_ICELANDER = "Marriage with Icelander";
+        NAME = "Name";
         POEM = "Poem";
         RING = "Ring";
         TEA = "Tea";
@@ -38,6 +43,9 @@ namespace People {
 
         public static function setName(string $name): void {
             self::$name = $name;
+
+            self::removeItem(\People\Player\ITEMS::DESIRE_TO_KNOW_NAME);
+            self::addItem(\People\Player\ITEMS::NAME);
         }
 
         public static function addItem(\People\Player\ITEMS $item): void {

@@ -1,7 +1,6 @@
 namespace Areas;
 
 require_once(__DIR__."/area.hack");
-require_once(__DIR__."/../items.hack");
 require_once(__DIR__."/../people/player.hack");
 require_once(__DIR__."/../people/waiter.hack");
 
@@ -49,8 +48,14 @@ class Table implements \Areas\Area {
                 echo "Free tea is to whimsical for any reality. Go acquire funds.\n";
             }
         } elseif ($choice === "d" && \People\Player::hasItem(\People\Player\ITEMS::POEM)) {
-            echo "A sparkle of adoration flickers across the waiter's eyes.\n" .
-             "He blinks and scurries off.";
+            if (\People\Waiter::shouldListenToPoem()) {
+                echo "A sparkle of adoration flickers across the waiter's eyes.\n" .
+                    "He blinks and scurries off.\n" .
+                    "A pound lays on the table. \n";
+                    \People\Player::addMoney(1);
+            } else {
+                echo "But he's already heard it.\n";
+            }
         } else {
             echo "The waiter raises a furry black eyebrow and leaves without a word.\n";
         }

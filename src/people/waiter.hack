@@ -4,6 +4,7 @@ require_once(__DIR__."/npc.hack");
 
 class Waiter implements \People\NPC {
     private static int $annoyance = 5;
+    private static bool $heardPoem = false;
 
     private static function brood(): void {
         self::$annoyance++;
@@ -17,6 +18,15 @@ class Waiter implements \People\NPC {
 
             return true;
         }
+        return false;
+    }
+
+    public static function shouldListenToPoem(): bool {
+        if (self::$heardPoem) {
+            return false;
+        }
+        self::$heardPoem = true;
+        
         return false;
     }
 

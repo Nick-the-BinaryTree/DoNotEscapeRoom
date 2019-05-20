@@ -12,6 +12,10 @@ enum RESULTS: int {
     WIN = 1;
 }
 
+function genMove(): MOVES {
+    return \rand(0, 3);
+}
+
 function getResult(MOVES $player1,
     MOVES $player2): RESULTS {
     if ($player1 === MOVES::ROCK) {
@@ -35,4 +39,24 @@ function getResult(MOVES $player1,
         return RESULTS::LOSE;
     }
     return RESULTS::WIN;
+}
+
+function queryPlayerMove(): MOVES {
+    echo "What would you like to play?\n" .
+        "(a) Rock.\n" . 
+        "(b) Paper.\n" .
+        "(c) Scissors.\n";
+    
+    $choice = \readline('');
+
+    if ($choice === "a") {
+        return MOVES::ROCK;
+    } elseif ($choice === "b") {
+        return MOVES::PAPER;
+    } elseif ($choice === "c") {
+        return MOVES::SCISSORS;
+    } else {
+        echo "You don't know what you're doing and make some sort of fist.\n";
+        return MOVES::ROCK;
+    }
 }
