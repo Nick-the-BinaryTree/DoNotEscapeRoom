@@ -18,25 +18,50 @@ function playIntro(): void {
     \readline("...finish your food six hours and fourteen minutes ago.");
 }
 
+function playHappyEnding(): void {
+    \readline("Soldiers burst into the room.");
+    \readline("You can see the tiny Icelandic flags on the breast pockets of their uniforms.");
+    \readline("Your wife starts saying something in Icelandic.");
+    \readline("The soldiers take both of you away.");
+    \readline("Over your shoulder, you see the waiter and the magistrate being herded
+        into a larger group of prisoners in town square.");
+    \readline("...");
+    \readline("Many years later, in Reykjavík,");
+    \readline("You will reminisce about the delightful room.");
+    \readline("And while you will be sad that it's gone,");
+    \readline("You will be grateful for the time you had in it.");
+    \readline("THE END OF DO NOT ESCAPE ROOM");
+}
+
 function playSadEnding(bool $inDebt=false): void {
     if ($inDebt) {
         \readline("Having accrued unpayable debts, you are spirited from the establishment.");
         \readline("Unfortunately, it seems money is the least of your problems.");
     }
-    \readline("The sad ending.");
-}
-
-function playLessSadEnding(): void {
-    \readline("The less sad ending.");
+    \readline("You kick around some gravel outside.");
+    \readline("The chilly air forms little clouds of fog where you breathe.");
+    \readline("A tank with an Icelandic flag rolls up the street.");
+    \readline("As the soldiers take you away,");
+    \readline("You wonder if things could have been different.");
 }
 
 function startGame(): void {
     $shouldMove = null;
     $currentArea = \Areas\AREAS::TABLE;
+    $winCountdown = 3;
 
-    // playIntro();
+    playIntro();
 
     while (!\People\Waiter::shouldKickOut()) {
+        if (\People\Player::hasItem(\People\Player\ITEMS::MARRIAGE_WITH_ICELANDER)) {
+            $winCountdown--;
+
+            if ($winCountdown === 0) {
+                playHappyEnding();
+                return;
+            }
+        }
+
         $shouldMove = false;
 
         if ($currentArea  === \Areas\AREAS::TABLE) {
