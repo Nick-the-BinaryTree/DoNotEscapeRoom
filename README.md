@@ -1,3 +1,3 @@
 # Do Not Escape Room
 
-`hhvm bin/start.hack`
+`hhvm bin/run.hack`
