@@ -2,8 +2,8 @@ namespace Game;
 
 use namespace HH\Lib\Vec;
 
-// require_once(__DIR__.'/areas/bar.hack');
-// require_once(__DIR__.'/areas/corner.hack');
+require_once(__DIR__.'/areas/bar.hack');
+require_once(__DIR__.'/areas/corner.hack');
 require_once(__DIR__.'/areas/table.hack');
 require_once(__DIR__.'/people/player.hack');
 require_once(__DIR__.'/people/waiter.hack');
@@ -16,17 +16,18 @@ function playIntro(): void {
     \readline("A staff member eyes you anxiously.");
     \readline("You did after all-");
     \readline("...finish your food six hours and fourteen minutes ago.");
+    echo "\n";
 }
 
 function playHappyEnding(): void {
+    echo "\n";
     \readline("Soldiers burst into the room.");
-    \readline("You can see the tiny Icelandic flags on the breast pockets of their uniforms.");
+    \readline("You can see the tiny flags on the breast pockets of their uniforms.");
     \readline("Your wife starts saying something in Icelandic.");
     \readline("The soldiers take both of you away.");
-    \readline("Over your shoulder, you see the waiter and the magistrate being herded
-        into a larger group of prisoners in town square.");
+    \readline("You see the waiter and the magistrate being herded into a larger group of prisoners in town square.");
     \readline("...");
-    \readline("Many years later, in Reykjavík,");
+    \readline("Many years later, in Reykjavik,");
     \readline("You will reminisce about the delightful room.");
     \readline("And while you will be sad that it's gone,");
     \readline("You will be grateful for the time you had in it.");
@@ -34,6 +35,7 @@ function playHappyEnding(): void {
 }
 
 function playSadEnding(bool $inDebt=false): void {
+    echo "\n";
     if ($inDebt) {
         \readline("Having accrued unpayable debts, you are spirited from the establishment.");
         \readline("Unfortunately, it seems money is the least of your problems.");
@@ -46,6 +48,7 @@ function playSadEnding(bool $inDebt=false): void {
 }
 
 function startGame(): void {
+    playHappyEnding();
     $shouldMove = null;
     $currentArea = \Areas\AREAS::TABLE;
     $winCountdown = 3;
@@ -64,7 +67,11 @@ function startGame(): void {
 
         $shouldMove = false;
 
-        if ($currentArea  === \Areas\AREAS::TABLE) {
+        if ($currentArea  === \Areas\AREAS::BAR) {
+            $shouldMove = \Areas\Bar::queryPlayer();
+        } elseif ($currentArea === \Areas\AREAS::CORNER) {
+            $shouldMove = \Areas\Corner::queryPlayer();
+        } else {
             $shouldMove = \Areas\Table::queryPlayer();
         }
         if (\People\Player::getMoney() < 0) {

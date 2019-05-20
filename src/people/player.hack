@@ -23,7 +23,7 @@ namespace People {
         public static ?string $name;
 
         public static function pluralizeMoney(int $money): string {
-            return $money . "pound" . ($money === 1 ? "" : "s");
+            return $money . " pound" . ($money === 1 ? "" : "s");
         }
 
         public static function describe(): void {
@@ -38,13 +38,11 @@ namespace People {
         }
 
         public static function getName(): string {
-            return self::$name ?? "...that's odd. You don't recall";
+            return self::$name ?? "...that's odd, you don't recall";
         }
 
         public static function setName(string $name): void {
             self::$name = $name;
-
-            self::addItem(\People\Player\ITEMS::NAME);
         }
 
         public static function addItem(\People\Player\ITEMS $item): void {
@@ -56,12 +54,14 @@ namespace People {
         }
 
         public static function removeItem(\People\Player\ITEMS $item): void {
-            self::$items = Keyset\filter(self::$items, $x ==> $x === $item);
+            self::$items = Keyset\filter(self::$items, $x ==> $x !== $item);
+
         }
 
         public static function addMoney(int $amount): void {
             if ($amount > 0) {
                 self::$money += $amount;
+                echo "\n*You got " . self::pluralizeMoney($amount) . "!\n";
             }
         }
 
@@ -72,6 +72,7 @@ namespace People {
         public static function removeMoney(int $amount): void {
             if ($amount > 0) {
                 self::$money -= $amount;
+                echo "\n*You lost " . self::pluralizeMoney($amount) . ".\n";
             }
         }
 

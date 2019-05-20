@@ -14,7 +14,7 @@ class Table implements \Areas\Area {
     private static function speakToWaiter(): void {
         \People\Waiter::comeOver();
         \People\Waiter::speak();
-        echo "\nYou look over his solid white collared shirt. How traditional.\n" .
+        echo "You look over his white button down shirt. How traditional.\n" .
             "  (a) Buy a cookie.\n" .
             "  (b) Buy tea.\n" .
             "  (c) Dismiss him.\n";
@@ -52,6 +52,8 @@ class Table implements \Areas\Area {
             } elseif (\People\Player::hasItem(\People\Player\ITEMS::POEM)
                 && !\People\Waiter::$heardPoem) {
                 \People\Waiter::listenToPoem();
+            } else {
+                \People\Waiter::leave();
             }
         } else {
             \People\Waiter::leave();
@@ -71,7 +73,7 @@ class Table implements \Areas\Area {
     }
 
     public static function queryPlayer(): bool {
-        echo "\n\nYour arms rest comfortably over the table.\n" .
+        echo "\nYour arms rest comfortably over the table.\n" .
             "What do you do?\n" .
             "  (a) Look at the menu.\n" .
             "  (b) Call the waiter over.\n" .
@@ -84,15 +86,15 @@ class Table implements \Areas\Area {
 
         if ($choice === "a") {
             self::describeMenu();
-        } elseif($choice === "b") {
+        } elseif ($choice === "b") {
             self::speakToWaiter();
-        } elseif($choice === "c") {
+        } elseif ($choice === "c") {
             if (\People\Player::hasItem(\People\Player\ITEMS::POEM)) {
                 self::readPoem();
             } else {
                 self::writePoem();
             }
-        } else {
+        } elseif ($choice === "d") {
             return true;
         }
         return false;

@@ -41,7 +41,7 @@ class Waiter implements \People\NPC {
 
         echo "A sparkle of adoration flickers across the waiter's eyes.\n" .
             "He blinks and scurries off.\n" .
-            "A pound lays on the table. \n";
+            "A pound lays on the table.\n";
         \People\Player::addMoney(1);
     }
 
@@ -72,7 +72,7 @@ class Waiter implements \People\NPC {
         } elseif (self::$annoyance < 18) {
             echo "\"An ill-mannered, saucy fellow thou art.\"\n";
         } elseif (self::$annoyance < 20) {
-            echo "\"Horswoggling fungus.\"";
+            echo "\"Horswoggling fungus.\"\n";
         } else {
             echo "The waiter suddenly bears down on you.\n" .
              "\"I'm sorry, but it's been hours since you've ordered anything,\n" .

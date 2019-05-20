@@ -11,7 +11,7 @@ class Woman implements \People\NPC {
     private static int $convProgress = 0;
 
     private static function announceMove(\RockPaperScissorsShoe\MOVES $move): void {
-        echo "She plays " . $move . "\n.";
+        echo "She plays " . \RockPaperScissorsShoe\MOVES::getNames()[$move] . ".\n";
     }
 
     public static function playRockPaperScissorsShoe(): bool {
@@ -83,7 +83,7 @@ class Woman implements \People\NPC {
         } elseif (self::$convProgress < 4) {
             echo "  (b) \"Marry me.\"\n";
         } elseif (self::$convProgress < 5) {
-            echo "  (b) \"Seriously.\"\n";
+            echo "  (b) \"Serious.\"\n";
         } elseif (self::$convProgress < 6) {
             $money = \People\Player::getMoney();
 
@@ -94,8 +94,10 @@ class Woman implements \People\NPC {
             echo "  (b) Borrow one of her rings.\n";
         } elseif (self::$convProgress < 9) {
             echo "  (b) \"What's your name?\"\n";
+        } elseif (\People\Player::hasItem(\People\Player\ITEMS::MARRIAGE_WITH_ICELANDER)) {
+            echo "  (b) \"So we're married, Charlotte?\"\n";
         } else {
-            echo "  (b) \"So we're married, Charlotte.\"\n";
+            echo "  (b) \"What do you do?\"\n";
         }
 
         $choice = \readline('');
@@ -127,20 +129,20 @@ class Woman implements \People\NPC {
                     self::$convProgress++;
                 } else {
                     echo "\"It's complicated...\n" .
-                        "You should be more concerned with getting kicked out for your lack of purchases.\"\n";
+                        "You should buy something before they kick you out.\"\n";
                 }
             } elseif (self::$convProgress < 3) {
                 \readline("\"Oh, I suppose it doesn't matter. Not much anyone can do about it now.\"");
                 \readline("\"There's an Icelandic invasion occuring.\"");
                 \readline("\"What?\" You feel mild perturbation.");
                 \readline("\"Oh yes, we've been planning it for some time.\"");
-                \readline("\"You are... an Icelandic woman?\"");
+                \readline("\"You are... an Icelander?\"");
                 \readline("\"It would appear I am.\" She seems to be growing bored with you.");
                 self::$convProgress++;
             } elseif (self::$convProgress < 4) {
                 \People\Player::addItem(\People\Player\ITEMS::DESIRE_TO_MARRY_ICELANDER);
                 echo("She wishes to express her bafflement publicly, but there's no one around but the magistrate.\n" .
-                    "\"Are you being serious?\"\n");
+                    "\"Serious?\"\n");
                 self::$convProgress++;
             } elseif (self::$convProgress < 5) {
                 \readline("\"Isn't this a bit fast?\" she responds very reasonably.");
@@ -184,11 +186,13 @@ class Woman implements \People\NPC {
                     self::$convProgress++;
                 } else {
                     echo "\"You want to know my name?\n" .
-                        "Do you even know your name?\"";
+                        "Do you even know your name?\"\n";
                     \People\Player::addItem(\People\Player\ITEMS::DESIRE_TO_KNOW_NAME);
                 }
-            } else {
+            } elseif (\People\Player::hasItem(\People\Player\ITEMS::MARRIAGE_WITH_ICELANDER)) {
                 echo "\"Allegedly.\"\n";
+            } else {
+                echo "\"I am an accountant.\"\n";
             }
         } else {
             echo "She rolls her eyes at your incoherent babble.\n";

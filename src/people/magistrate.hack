@@ -49,10 +49,10 @@ class Magistrate implements \People\NPC {
         if (self::$convProgress < 1) {
             if ($choice === "a") {
                 echo "\"Yes, I am the magistrate.\n" .
-                    "I meet most people in this town at some point.\"";
+                    "I meet most people in this town at some point.\"\n";
                 self::$convProgress++;
             } else {
-                echo "\"Trevor.\"";
+                echo "\"Trevor.\"\n";
             }
         } elseif (self::$convProgress < 2) {
             if ($choice === "a") {
@@ -60,7 +60,7 @@ class Magistrate implements \People\NPC {
                     "I also became ordained on the internet to officiate weddings.\"\n";
                 self::$convProgress++;
             } else {
-                echo "\"None really. I grew a potato in my home garden.\"";
+                echo "\"None really. I grew a potato in my home garden.\"\n";
             }
         } elseif (self::$convProgress < 3) {
             if ($choice === "a") {
@@ -90,7 +90,7 @@ class Magistrate implements \People\NPC {
                 \readline("The magistrate looks over the signatures.");
                 \readline("Charlotte tells you she wants to go on honeymoon in Costa Rica.");
                 \readline("The magistrate hands the papers over to you.");
-                \readline("You call the waiter over and ask him to fax the marriage officiation to town hall");
+                \readline("You call the waiter over and ask him to fax the marriage officiation to town hall.");
                 \readline("You're married.");
 
                 \People\Player::removeItem(\People\Player\ITEMS::MAGISTRATE_PHONE);
@@ -102,7 +102,7 @@ class Magistrate implements \People\NPC {
             if ($choice === "a") {
                 echo "\"The deterioration of the middle class.\"\n";
             } else {
-                echo "\"I believe I just wed you to someone else.\"";
+                echo "\"I believe I just wed you to someone else.\"\n";
             }
         }
     }

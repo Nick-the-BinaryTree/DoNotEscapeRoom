@@ -5,7 +5,7 @@ require_once(__DIR__."/../people/player.hack");
 
 class Corner implements \Areas\Area {
     public static function queryPlayer(): bool {
-        echo "The two dark rose walls meet majestically above a bare wood floor.\n" .
+        echo "\nThe two dark rose walls meet majestically above a bare wood floor.\n" .
             "You stand in the corner of the rectangular room.\n" .
             "What now?\n" .
             "  (a) Look out the window.\n" . 
@@ -23,7 +23,7 @@ class Corner implements \Areas\Area {
 
             if (\People\Player::hasItem(\People\Player\ITEMS::DESIRE_TO_KNOW_NAME)) {
                 \readline("What a bother. Not having a name.");
-                \readline("Oh but you must have one.");
+                \readline("Oh, but you must have one.");
                 \readline("From long ago...");
                 \readline("What was it again?");
                 \readline("You think hard.");
@@ -39,6 +39,7 @@ class Corner implements \Areas\Area {
                 \readline("It reads: \"Hugo\".");
                 
                 \People\Player::removeItem(\People\Player\ITEMS::DESIRE_TO_KNOW_NAME);
+                \People\Player::addItem(\People\Player\ITEMS::NAME);
                 \People\Player::setName("Hugo");
             }
         } elseif ($choice === "c") {
