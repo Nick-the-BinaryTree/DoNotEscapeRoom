@@ -48,7 +48,6 @@ function playSadEnding(bool $inDebt=false): void {
 }
 
 function startGame(): void {
-    playHappyEnding();
     $shouldMove = null;
     $currentArea = \Areas\AREAS::TABLE;
     $winCountdown = 3;
